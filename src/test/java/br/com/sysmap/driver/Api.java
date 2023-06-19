@@ -22,11 +22,7 @@ public class Api {
                     "http://api.openweathermap.org/geo/1.0/direct?q="+cidade+"&appid="+apiKey);
             HttpResponse response = client.execute(get);
             String resp = EntityUtils.toString(response.getEntity());
-            System.out.println(resp);
             JSONObject obj = new JSONObject(resp.replace("[","").replace("]",""));
-            System.out.println(obj.getBigDecimal("lat"));
-            System.out.println(obj.getBigDecimal("lon"));
-//            System.out.println(obj);
 
             retorno = "lat="
                     .concat(String.valueOf(obj.getBigDecimal("lat")))
@@ -63,20 +59,22 @@ public class Api {
         return retorno;
     }
 
-    public static String tempResponse(String cidade) {
+    public static String tempResponse(String cidade, String tipoTemp) {
+
         String retorno = null;
-
-        try(CloseableHttpClient client = HttpClients.createDefault()){
-
-            HttpGet get = new HttpGet(
-                    "http://api.openweathermap.org/geo/1.0/direct?q="+cidade+"&appid="+apiKey);
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            String uri = "https://api.openweathermap.org/data/2.5/weather?"+getLatLon(cidade)+"&units="+tipoTemp+"&appid="+apiKey;
+            HttpGet get = new HttpGet(uri);
             HttpResponse response = client.execute(get);
             String resp = EntityUtils.toString(response.getEntity());
-            System.out.println(resp);
             JSONObject obj = new JSONObject(resp);
-            System.out.println(obj.getBigDecimal("temp"));
 
-            retorno = String.valueOf(obj.getBigDecimal("temp"));
+//            System.out.println(obj.getJSONObject("main"));
+            JSONObject main = obj.getJSONObject("main");
+//             System.out.println("Retorno da api com o valor da temperatura: " + main.get("temp"));
+
+            retorno = String.valueOf(main.get("temp"));
+
 
         }catch (Exception e){
             System.out.println(e);
