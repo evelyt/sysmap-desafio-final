@@ -31,7 +31,7 @@ public class Projeto {
 
     //Testes
 
-    //CT1 - Consultar Cidade
+    //Letra B) CT1 - Consultar Cidade
     @Test
     @Order(2)
     void consultarCidade(){
@@ -43,7 +43,7 @@ public class Projeto {
         Browser.clicar(By.xpath("//div[@class='search']//button[@class='button-round dark']"));
         //Step3
         validarNomeCidade();
-        
+
         System.out.println("--Validando Caso de Teste 1--");
 
     }
@@ -54,7 +54,7 @@ public class Projeto {
         Browser.aguardar(2);
     }
 
-    //CT2 - Validar se a temperatura em grau Celsius
+    //Letra C) CT2 - Validar se a temperatura em grau Celsius
     @Test
     @Order(4)
     void validaCelsius(){
@@ -76,7 +76,7 @@ public class Projeto {
 
     }
 
-    //CT3 - Validar se a temperatura em grau Fahrenheit
+    //Letra D) CT3 - Validar se a temperatura em grau Fahrenheit
     @Test
     @Order(5)
     void validaFahrenheit(){
