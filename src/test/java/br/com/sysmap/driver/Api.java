@@ -54,6 +54,7 @@ public class Api {
             JSONObject obj = new JSONObject(resp);
 
 
+
             retorno = obj.getString("name");
 
         }catch (Exception e){
@@ -62,21 +63,20 @@ public class Api {
         return retorno;
     }
 
-    public static String temp(String cidade) {
-
+    public static String tempResponse(String cidade) {
         String retorno = null;
 
         try(CloseableHttpClient client = HttpClients.createDefault()){
 
-            String uri = "https://api.openweathermap.org/data/2.5/weather?"+getLatLon(cidade)+"&appid="+apiKey;
-
-            HttpGet get = new HttpGet(uri);
+            HttpGet get = new HttpGet(
+                    "http://api.openweathermap.org/geo/1.0/direct?q="+cidade+"&appid="+apiKey);
             HttpResponse response = client.execute(get);
             String resp = EntityUtils.toString(response.getEntity());
+            System.out.println(resp);
             JSONObject obj = new JSONObject(resp);
+            System.out.println(obj.getBigDecimal("temp"));
 
-
-            retorno = obj.getString("temp");
+            retorno = String.valueOf(obj.getBigDecimal("temp"));
 
         }catch (Exception e){
             System.out.println(e);
